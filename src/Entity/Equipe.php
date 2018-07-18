@@ -27,6 +27,11 @@ class Equipe
      * @ORM\Column(type="string", length=255)
      */
     private $pays;
+    
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $pays_initial;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", mappedBy="equipes")
@@ -69,6 +74,18 @@ class Equipe
     public function setPays(string $pays): self
     {
         $this->pays = $pays;
+
+        return $this;
+    }
+    
+    public function getPaysInitial(): ?string
+    {
+        return $this->pays_initial;
+    }
+
+    public function setPaysInitial(string $pays_initial): self
+    {
+        $this->pays_initial = $pays_initial;
 
         return $this;
     }

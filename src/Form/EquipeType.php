@@ -14,6 +14,7 @@ class EquipeType extends AbstractType
         $builder
             ->add('nom')
             ->add('pays')
+            ->add('pays_initial', null, array('label' => "Code du pays (ex: France = fr, Allemagne = de)"))
         ;
     }
 
