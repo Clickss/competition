@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groupe index{% endblock %}
+
+{% block body %}
+    <h1>Groupe index</h1>    
+    <a href="{{ path('groupe_new', {'competition': competition.id}) }}">Create new</a>
+    <a href="{{ path('groupe_genDuels', {'competition': competition.id}) }}">Générer les duels</a>
+    
+        {% for groupe in groupes %}
+            <h2>Groupe {{ groupe.groupe.nom }} </h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Équipe</th>
+                        <th>Points</th>
+                        <th>J</th>
+                        <th>G</th>
+                        <th>N</th>
+                        <th>P</th>
+                        <th>Bp</th>
+                        <th>Bc</th>
+                        <th>Diff</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equipe in groupe.equipes %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ equipe.equipe.nom }}</td>
+                            <td>{{ equipe.points }}</td>
+                            <td>{{ equipe.match_j }}</td>
+                            <td>{{ equipe.match_g }}</td>
+                            <td>{{ equipe.match_n }}</td>
+                            <td>{{ equipe.match_p }}</td>
+                            <td>{{ equipe.but_pour }}</td>
+                            <td>{{ equipe.but_contre }}</td>
+                            <td>{{ equipe.diff }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">no records found</td>
+                        </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+            {% if groupe.duels|length != 0 %}
+                <h3>Matchs</h3>
+                <table>
+                    <tbody>
+                        {% for duel in groupe.duels %}
+                            <tr>
+                                <td>{%if duel.horaire %}{{ duel.horaire|date('d-m-Y H:m:i') }}{% endif %}</td>
+                                <td>{{ duel.equipe1.nom }} {{ duel.scoreequipe1 }} vs {{ duel.scoreequipe2 }} {{ duel.equipe2.nom }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+
+{% endblock %}
