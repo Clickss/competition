@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 18 Juillet 2018 à 09:38
+-- Généré le :  Mer 18 Juillet 2018 à 12:03
 -- Version du serveur :  5.7.22-0ubuntu0.17.10.1
 -- Version de PHP :  7.1.17-0ubuntu0.17.10.1
 
@@ -129,38 +129,39 @@ INSERT INTO `duel` (`id`, `typeduel_id`, `equipe1_id`, `equipe2_id`, `horaire`, 
 CREATE TABLE `equipe` (
   `id` int(11) NOT NULL,
   `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pays` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `pays` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pays_initial` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contenu de la table `equipe`
 --
 
-INSERT INTO `equipe` (`id`, `nom`, `pays`) VALUES
-(1, 'Allemagne', 'Allemagne'),
-(2, 'Angola', 'Angola'),
-(3, 'Arabie saoudite', 'Arabie saoudite'),
-(4, 'Argentine', 'Argentine'),
-(5, 'Bahreïn', 'Bahreïn'),
-(6, 'Biélorussie', 'Biélorussie'),
-(7, 'Brésil', 'Brésil'),
-(8, 'Chili', 'Chili'),
-(9, 'Croatie', 'Croatie'),
-(10, 'Danemark', 'Danemark'),
-(11, 'Égypte', 'Égypte'),
-(12, 'Espagne', 'Espagne'),
-(13, 'France', 'France'),
-(14, 'Hongrie', 'Hongrie'),
-(15, 'Islande', 'Islande'),
-(16, 'Japon', 'Japon'),
-(17, 'Macédoine', 'Macédoine'),
-(18, 'Norvège', 'Norvège'),
-(19, 'Pologne', 'Pologne'),
-(20, 'Qatar', 'Qatar'),
-(21, 'Russie', 'Russie'),
-(22, 'Slovénie', 'Slovénie'),
-(23, 'Suède', 'Suède'),
-(24, 'Tunisie', 'Tunisie');
+INSERT INTO `equipe` (`id`, `nom`, `pays`, `pays_initial`) VALUES
+(1, 'Allemagne', 'Allemagne', 'de'),
+(2, 'Angola', 'Angola', 'ao'),
+(3, 'Arabie saoudite', 'Arabie saoudite', 'sa'),
+(4, 'Argentine', 'Argentine', 'ar'),
+(5, 'Bahreïn', 'Bahreïn', 'bh'),
+(6, 'Biélorussie', 'Biélorussie', 'by'),
+(7, 'Brésil', 'Brésil', 'br'),
+(8, 'Chili', 'Chili', 'cl'),
+(9, 'Croatie', 'Croatie', 'hr'),
+(10, 'Danemark', 'Danemark', 'dk'),
+(11, 'Égypte', 'Égypte', 'eg'),
+(12, 'Espagne', 'Espagne', 'es'),
+(13, 'France', 'France', 'fr'),
+(14, 'Hongrie', 'Hongrie', 'hu'),
+(15, 'Islande', 'Islande', 'is'),
+(16, 'Japon', 'Japon', 'jp'),
+(17, 'Macédoine', 'Macédoine', 'ma'),
+(18, 'Norvège', 'Norvège', 'no'),
+(19, 'Pologne', 'Pologne', 'pl'),
+(20, 'Qatar', 'Qatar', 'qa'),
+(21, 'Russie', 'Russie', 'ru'),
+(22, 'Slovénie', 'Slovénie', 'si'),
+(23, 'Suède', 'Suède', 'se'),
+(24, 'Tunisie', 'Tunisie', 'tn');
 
 -- --------------------------------------------------------
 
