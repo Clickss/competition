@@ -38,6 +38,12 @@ class Duel
     private $score_equipe2;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Competition", inversedBy="duels")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $competition;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDuel", inversedBy="duels")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -92,6 +98,18 @@ class Duel
     public function setScoreEquipe2(?int $score_equipe2): self
     {
         $this->score_equipe2 = $score_equipe2;
+
+        return $this;
+    }
+    
+    public function getCompetition(): ?Competition
+    {
+        return $this->competition;
+    }
+
+    public function setCompetition(?Competition $competition): self
+    {
+        $this->competition = $competition;
 
         return $this;
     }

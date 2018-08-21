@@ -47,14 +47,6 @@ class CompetitionController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="competition_show", methods="GET")
-     */
-    public function show(Competition $competition): Response
-    {
-        return $this->render('competition/show.html.twig', ['competition' => $competition]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="competition_edit", methods="GET|POST")
      */
     public function edit(Request $request, Competition $competition): Response

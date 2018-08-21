@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Mer 18 Juillet 2018 à 12:03
+-- Généré le :  Mar 21 Août 2018 à 10:28
 -- Version du serveur :  5.7.22-0ubuntu0.17.10.1
 -- Version de PHP :  7.1.17-0ubuntu0.17.10.1
 
@@ -36,7 +36,8 @@ CREATE TABLE `competition` (
 --
 
 INSERT INTO `competition` (`id`, `nom`) VALUES
-(1, 'Mondial');
+(1, 'Mondial'),
+(2, 'Euro féminin 2018');
 
 -- --------------------------------------------------------
 
@@ -51,74 +52,75 @@ CREATE TABLE `duel` (
   `equipe2_id` int(11) NOT NULL,
   `horaire` datetime DEFAULT NULL,
   `score_equipe1` int(11) DEFAULT NULL,
-  `score_equipe2` int(11) DEFAULT NULL
+  `score_equipe2` int(11) DEFAULT NULL,
+  `competition_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Contenu de la table `duel`
 --
 
-INSERT INTO `duel` (`id`, `typeduel_id`, `equipe1_id`, `equipe2_id`, `horaire`, `score_equipe1`, `score_equipe2`) VALUES
-(121, 1, 7, 13, '2017-01-11 20:45:00', 16, 31),
-(122, 1, 7, 16, '2017-01-15 20:45:00', 27, 24),
-(123, 1, 7, 18, '2017-01-17 14:00:00', 26, 39),
-(124, 1, 7, 19, '2017-01-14 14:45:00', 28, 24),
-(125, 1, 7, 21, '2017-01-19 14:00:00', 24, 28),
-(126, 1, 13, 16, '2017-01-13 17:45:00', 31, 19),
-(127, 1, 13, 18, '2017-01-15 17:45:00', 31, 28),
-(128, 1, 13, 19, '2017-01-19 17:45:00', 26, 25),
-(129, 1, 13, 21, '2017-01-17 20:45:00', 35, 24),
-(130, 1, 16, 18, '2017-01-19 20:45:00', 23, 38),
-(131, 1, 16, 19, '2017-01-17 17:45:00', 25, 26),
-(132, 1, 16, 21, '2017-01-12 17:45:00', 29, 39),
-(133, 1, 18, 19, '2017-01-12 20:45:00', 22, 20),
-(134, 1, 18, 21, '2017-01-14 17:45:00', 28, 24),
-(135, 1, 19, 21, '2017-01-16 20:45:00', 20, 24),
-(136, 1, 2, 12, '2017-01-16 20:45:00', 22, 42),
-(137, 1, 2, 15, '2017-01-17 20:45:00', 19, 33),
-(138, 1, 2, 17, '2017-01-14 20:45:00', 22, 31),
-(139, 1, 2, 22, '2017-01-14 14:00:00', 25, 42),
-(140, 1, 2, 24, '2017-01-19 14:00:00', 34, 43),
-(141, 1, 12, 15, NULL, NULL, NULL),
-(142, 1, 12, 17, NULL, NULL, NULL),
-(143, 1, 12, 22, NULL, NULL, NULL),
-(144, 1, 12, 24, NULL, NULL, NULL),
-(145, 1, 15, 17, NULL, NULL, NULL),
-(146, 1, 15, 22, NULL, NULL, NULL),
-(147, 1, 15, 24, NULL, NULL, NULL),
-(148, 1, 17, 22, NULL, NULL, NULL),
-(149, 1, 17, 24, NULL, NULL, NULL),
-(150, 1, 22, 24, NULL, NULL, NULL),
-(151, 1, 1, 3, NULL, NULL, NULL),
-(152, 1, 1, 6, NULL, NULL, NULL),
-(153, 1, 1, 8, NULL, NULL, NULL),
-(154, 1, 1, 9, NULL, NULL, NULL),
-(155, 1, 1, 14, NULL, NULL, NULL),
-(156, 1, 3, 6, NULL, NULL, NULL),
-(157, 1, 3, 8, NULL, NULL, NULL),
-(158, 1, 3, 9, NULL, NULL, NULL),
-(159, 1, 3, 14, NULL, NULL, NULL),
-(160, 1, 6, 8, NULL, NULL, NULL),
-(161, 1, 6, 9, NULL, NULL, NULL),
-(162, 1, 6, 14, NULL, NULL, NULL),
-(163, 1, 8, 9, NULL, NULL, NULL),
-(164, 1, 8, 14, NULL, NULL, NULL),
-(165, 1, 9, 14, NULL, NULL, NULL),
-(166, 1, 4, 5, NULL, NULL, NULL),
-(167, 1, 4, 10, NULL, NULL, NULL),
-(168, 1, 4, 11, NULL, NULL, NULL),
-(169, 1, 4, 20, NULL, NULL, NULL),
-(170, 1, 4, 23, NULL, NULL, NULL),
-(171, 1, 5, 10, NULL, NULL, NULL),
-(172, 1, 5, 11, NULL, NULL, NULL),
-(173, 1, 5, 20, NULL, NULL, NULL),
-(174, 1, 5, 23, NULL, NULL, NULL),
-(175, 1, 10, 11, NULL, NULL, NULL),
-(176, 1, 10, 20, NULL, NULL, NULL),
-(177, 1, 10, 23, NULL, NULL, NULL),
-(178, 1, 11, 20, NULL, NULL, NULL),
-(179, 1, 11, 23, NULL, NULL, NULL),
-(180, 1, 20, 23, NULL, NULL, NULL);
+INSERT INTO `duel` (`id`, `typeduel_id`, `equipe1_id`, `equipe2_id`, `horaire`, `score_equipe1`, `score_equipe2`, `competition_id`) VALUES
+(121, 1, 7, 13, '2017-01-11 20:45:00', 16, 31, 1),
+(122, 1, 7, 16, '2017-01-15 20:45:00', 27, 24, 1),
+(123, 1, 7, 18, '2017-01-17 14:00:00', 26, 39, 1),
+(124, 1, 7, 19, '2017-01-14 14:45:00', 28, 24, 1),
+(125, 1, 7, 21, '2017-01-19 14:00:00', 24, 28, 1),
+(126, 1, 13, 16, '2017-01-13 17:45:00', 31, 19, 1),
+(127, 1, 13, 18, '2017-01-15 17:45:00', 31, 28, 1),
+(128, 1, 13, 19, '2017-01-19 17:45:00', 26, 25, 1),
+(129, 1, 13, 21, '2017-01-17 20:45:00', 35, 24, 1),
+(130, 1, 16, 18, '2017-01-19 20:45:00', 23, 38, 1),
+(131, 1, 16, 19, '2017-01-17 17:45:00', 25, 26, 1),
+(132, 1, 16, 21, '2017-01-12 17:45:00', 29, 39, 1),
+(133, 1, 18, 19, '2017-01-12 20:45:00', 22, 20, 1),
+(134, 1, 18, 21, '2017-01-14 17:45:00', 28, 24, 1),
+(135, 1, 19, 21, '2017-01-16 20:45:00', 20, 24, 1),
+(136, 1, 2, 12, '2017-01-16 20:45:00', 22, 42, 1),
+(137, 1, 2, 15, '2017-01-17 20:45:00', 19, 33, 1),
+(138, 1, 2, 17, '2017-01-14 20:45:00', 22, 31, 1),
+(139, 1, 2, 22, '2017-01-14 14:00:00', 25, 42, 1),
+(140, 1, 2, 24, '2017-01-19 14:00:00', 34, 43, 1),
+(141, 1, 12, 15, NULL, NULL, NULL, 1),
+(142, 1, 12, 17, NULL, NULL, NULL, 1),
+(143, 1, 12, 22, NULL, NULL, NULL, 1),
+(144, 1, 12, 24, NULL, NULL, NULL, 1),
+(145, 1, 15, 17, NULL, NULL, NULL, 1),
+(146, 1, 15, 22, NULL, NULL, NULL, 1),
+(147, 1, 15, 24, NULL, NULL, NULL, 1),
+(148, 1, 17, 22, NULL, NULL, NULL, 1),
+(149, 1, 17, 24, NULL, NULL, NULL, 1),
+(150, 1, 22, 24, NULL, NULL, NULL, 1),
+(151, 1, 1, 3, NULL, NULL, NULL, 1),
+(152, 1, 1, 6, NULL, NULL, NULL, 1),
+(153, 1, 1, 8, NULL, NULL, NULL, 1),
+(154, 1, 1, 9, NULL, NULL, NULL, 1),
+(155, 1, 1, 14, NULL, NULL, NULL, 1),
+(156, 1, 3, 6, NULL, NULL, NULL, 1),
+(157, 1, 3, 8, NULL, NULL, NULL, 1),
+(158, 1, 3, 9, NULL, NULL, NULL, 1),
+(159, 1, 3, 14, NULL, NULL, NULL, 1),
+(160, 1, 6, 8, NULL, NULL, NULL, 1),
+(161, 1, 6, 9, NULL, NULL, NULL, 1),
+(162, 1, 6, 14, NULL, NULL, NULL, 1),
+(163, 1, 8, 9, NULL, NULL, NULL, 1),
+(164, 1, 8, 14, NULL, NULL, NULL, 1),
+(165, 1, 9, 14, NULL, NULL, NULL, 1),
+(166, 1, 4, 5, NULL, NULL, NULL, 1),
+(167, 1, 4, 10, NULL, NULL, NULL, 1),
+(168, 1, 4, 11, NULL, NULL, NULL, 1),
+(169, 1, 4, 20, NULL, NULL, NULL, 1),
+(170, 1, 4, 23, NULL, NULL, NULL, 1),
+(171, 1, 5, 10, NULL, NULL, NULL, 1),
+(172, 1, 5, 11, NULL, NULL, NULL, 1),
+(173, 1, 5, 20, NULL, NULL, NULL, 1),
+(174, 1, 5, 23, NULL, NULL, NULL, 1),
+(175, 1, 10, 11, NULL, NULL, NULL, 1),
+(176, 1, 10, 20, NULL, NULL, NULL, 1),
+(177, 1, 10, 23, NULL, NULL, NULL, 1),
+(178, 1, 11, 20, NULL, NULL, NULL, 1),
+(179, 1, 11, 23, NULL, NULL, NULL, 1),
+(180, 1, 20, 23, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -161,7 +163,12 @@ INSERT INTO `equipe` (`id`, `nom`, `pays`, `pays_initial`) VALUES
 (21, 'Russie', 'Russie', 'ru'),
 (22, 'Slovénie', 'Slovénie', 'si'),
 (23, 'Suède', 'Suède', 'se'),
-(24, 'Tunisie', 'Tunisie', 'tn');
+(24, 'Tunisie', 'Tunisie', 'tn'),
+(25, 'Serbie', 'Serbie', 'rs'),
+(26, 'Monténégro', 'Monténégro', 'me'),
+(27, 'Pays-Bas', 'Pays-Bas', 'nl'),
+(28, 'Roumanie', 'Roumanie', 'ro'),
+(29, 'République Tchèque', 'République Tchèque', 'cz');
 
 -- --------------------------------------------------------
 
@@ -183,7 +190,11 @@ INSERT INTO `groupe` (`id`, `competition_id`, `nom`) VALUES
 (1, 1, 'A'),
 (2, 1, 'B'),
 (3, 1, 'C'),
-(4, 1, 'D');
+(4, 1, 'D'),
+(8, 2, '1'),
+(9, 2, '2'),
+(10, 2, '3'),
+(11, 2, '4');
 
 -- --------------------------------------------------------
 
@@ -224,7 +235,23 @@ INSERT INTO `groupe_equipe` (`groupe_id`, `equipe_id`) VALUES
 (4, 10),
 (4, 11),
 (4, 20),
-(4, 23);
+(4, 23),
+(8, 10),
+(8, 19),
+(8, 23),
+(8, 25),
+(9, 13),
+(9, 21),
+(9, 22),
+(9, 26),
+(10, 9),
+(10, 12),
+(10, 14),
+(10, 27),
+(11, 1),
+(11, 18),
+(11, 28),
+(11, 29);
 
 -- --------------------------------------------------------
 
@@ -303,7 +330,7 @@ ALTER TABLE `type_duel`
 -- AUTO_INCREMENT pour la table `competition`
 --
 ALTER TABLE `competition`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT pour la table `duel`
 --
@@ -313,12 +340,12 @@ ALTER TABLE `duel`
 -- AUTO_INCREMENT pour la table `equipe`
 --
 ALTER TABLE `equipe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT pour la table `groupe`
 --
 ALTER TABLE `groupe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT pour la table `type_duel`
 --

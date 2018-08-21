@@ -1,13 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Competition{% endblock %}
+{% block title %}Compétitions{% endblock %}
 
 {% block body %}
-    <h1>Edit Competition</h1>
-
-    {{ include('competition/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('competition_index') }}">back to list</a>
-
-    {{ include('competition/_delete_form.html.twig') }}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Compétitions</h1>
+            </div>
+            <div class="col-12">
+                {{ include('competition/_form.html.twig', {'button_label': 'Éditer'}) }}                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ include('competition/_delete_form.html.twig') }} 
+                <a href="{{ path('competition_index') }}">Liste des compétitions</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

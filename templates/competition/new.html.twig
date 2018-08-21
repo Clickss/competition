@@ -1,11 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Competition{% endblock %}
+{% block title %}Compétitions{% endblock %}
 
 {% block body %}
-    <h1>Create new Competition</h1>
-
-    {{ include('competition/_form.html.twig') }}
-
-    <a href="{{ path('competition_index') }}">back to list</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Nouvelle compétition</h1>
+            </div>
+            <div class="col-12">
+                {{ include('competition/_form.html.twig') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a href="{{ path('competition_index') }}">Liste des compétitions</a>
+            </div>
+        </div>
 {% endblock %}

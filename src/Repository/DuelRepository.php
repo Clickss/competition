@@ -6,6 +6,7 @@ use App\Entity\Duel;
 use App\Entity\TypeDuel;
 use App\Entity\Equipe;
 use App\Entity\Groupe;
+use App\Entity\Competition;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,52 +25,52 @@ class DuelRepository extends ServiceEntityRepository
         parent::__construct($registry, Duel::class);
     }
     
-    public function nbMatchGagne(Equipe $equipe){
-        $reqsql = "SELECT count(*) as nbMatchGagne FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 > d.score_equipe2) OR (d.equipe2_id = :equipe AND d.score_equipe1 < d.score_equipe2)";
+    public function nbMatchGagne(Equipe $equipe, Competition $competition){
+        $reqsql = "SELECT count(*) as nbMatchGagne FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 > d.score_equipe2 AND d.competition_id = :competition) OR (d.equipe2_id = :equipe AND d.score_equipe1 < d.score_equipe2 AND d.competition_id = :competition)";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         return $stmt->fetchAll();
     }
     
-    public function nbMatchNul(Equipe $equipe){
-        $reqsql = "SELECT count(*) as nbMatchNul FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 = d.score_equipe2) OR (d.equipe2_id = :equipe AND d.score_equipe1 = d.score_equipe2)";
+    public function nbMatchNul(Equipe $equipe, Competition $competition){
+        $reqsql = "SELECT count(*) as nbMatchNul FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 = d.score_equipe2 AND d.competition_id = :competition) OR (d.equipe2_id = :equipe AND d.score_equipe1 = d.score_equipe2 AND d.competition_id = :competition)";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         return $stmt->fetchAll();
     }
     
-    public function nbMatchPerdu(Equipe $equipe){
-        $reqsql = "SELECT count(*) as nbMatchPerdu FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 < d.score_equipe2) OR (d.equipe2_id = :equipe AND d.score_equipe1 > d.score_equipe2)";
+    public function nbMatchPerdu(Equipe $equipe, Competition $competition){
+        $reqsql = "SELECT count(*) as nbMatchPerdu FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 < d.score_equipe2 AND d.competition_id = :competition) OR (d.equipe2_id = :equipe AND d.score_equipe1 > d.score_equipe2 AND d.competition_id = :competition)";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         return $stmt->fetchAll();
     }
     
-    public function nbMatchJoue(Equipe $equipe){
-        $reqsql = "SELECT count(*) as nbMatch FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 IS NOT NULL AND d.score_equipe2 IS NOT NULL) OR (d.equipe2_id = :equipe AND d.score_equipe1 IS NOT NULL AND d.score_equipe2 IS NOT NULL)";
+    public function nbMatchJoue(Equipe $equipe, Competition $competition){
+        $reqsql = "SELECT count(*) as nbMatch FROM duel d WHERE (d.equipe1_id = :equipe AND d.score_equipe1 IS NOT NULL AND d.score_equipe2 IS NOT NULL AND d.competition_id = :competition) OR (d.equipe2_id = :equipe AND d.score_equipe1 IS NOT NULL AND d.score_equipe2 IS NOT NULL AND d.competition_id = :competition)";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         return $stmt->fetchAll();
     }
     
-    public function nbButPour(Equipe $equipe){
+    public function nbButPour(Equipe $equipe, Competition $competition){
         $reqsql = "SELECT 
                         CASE
                             WHEN SUM(d.score_equipe1)IS NULL THEN '0'
                             ELSE SUM(d.score_equipe1)
                         END as nbButPour 
-                    FROM duel d WHERE d.equipe1_id = :equipe";
+                    FROM duel d WHERE d.equipe1_id = :equipe AND d.competition_id = :competition";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         $butpour1 = $stmt->fetchAll();
         
@@ -78,26 +79,26 @@ class DuelRepository extends ServiceEntityRepository
                             WHEN SUM(d.score_equipe2)IS NULL THEN '0'
                             ELSE SUM(d.score_equipe2)
                         END as nbButPour 
-                    FROM duel d WHERE d.equipe2_id = :equipe";
+                    FROM duel d WHERE d.equipe2_id = :equipe AND d.competition_id = :competition";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         $butpour2 = $stmt->fetchAll();
         
         return [0 => ["nbButPour" => intval($butpour1[0]['nbButPour']) + intval($butpour2[0]['nbButPour'])]];
     }
     
-    public function nbButContre(Equipe $equipe){
+    public function nbButContre(Equipe $equipe, Competition $competition){
         $reqsql = "SELECT 
                         CASE
                             WHEN SUM(d.score_equipe2)IS NULL THEN '0'
                             ELSE SUM(d.score_equipe2)
                         END as nbButContre 
-                    FROM duel d WHERE d.equipe1_id = :equipe";
+                    FROM duel d WHERE d.equipe1_id = :equipe AND d.competition_id = :competition";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         $butcontre1 = $stmt->fetchAll();
         
@@ -106,27 +107,27 @@ class DuelRepository extends ServiceEntityRepository
                             WHEN SUM(d.score_equipe1)IS NULL THEN '0'
                             ELSE SUM(d.score_equipe1)
                         END as nbButContre 
-                    FROM duel d WHERE d.equipe2_id = :equipe";
+                    FROM duel d WHERE d.equipe2_id = :equipe AND d.competition_id = :competition";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["equipe" => $equipe->getId()]);
+        $stmt->execute(["equipe" => $equipe->getId(), "competition" => $competition->getId()]);
         
         $butcontre2 = $stmt->fetchAll();
         
         return [0 => ["nbButContre" => intval($butcontre1[0]['nbButContre']) + intval($butcontre2[0]['nbButContre'])]];
     }
     
-    public function findDuelByGroupe(Groupe $groupe){
+    public function findDuelByGroupe(Groupe $groupe, Competition $competition){
         
         $reqsql = "SELECT * FROM duel d 
-                    INNER JOIN groupe_equipe ge1 ON ge1.equipe_id = d.equipe1_id
-                    INNER JOIN groupe_equipe ge2 ON ge2.equipe_id = d.equipe2_id
-                    INNER JOIN type_duel td ON d.typeduel_id = td.id
-                    WHERE ge1.groupe_id = :groupe AND ge2.groupe_id = :groupe AND d.horaire IS NOT NULL AND td.code_type_duel = :duel_poule
+                    LEFT JOIN groupe_equipe ge1 ON ge1.equipe_id = d.equipe1_id
+                    LEFT JOIN groupe_equipe ge2 ON ge2.equipe_id = d.equipe2_id
+                    LEFT JOIN type_duel td ON d.typeduel_id = td.id
+                    WHERE ge1.groupe_id = :groupe AND ge2.groupe_id = :groupe AND td.code_type_duel = :duel_poule AND d.competition_id = :competition
                     ORDER BY d.horaire";
         
         $stmt = $this->getEntityManager()->getConnection()->prepare($reqsql);
-        $stmt->execute(["groupe" => $groupe->getId(), "duel_poule" => Duel::DUEL_POULE]);
+        $stmt->execute(["groupe" => $groupe->getId(), "duel_poule" => Duel::DUEL_POULE, "competition" => $competition->getId()]);
         
         $retour = $stmt->fetchAll();
         

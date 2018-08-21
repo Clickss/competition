@@ -9,14 +9,15 @@
                 <h1>Les groupes pour la compétition : {{ competition.nom }}</h1>
             </div>
             <div class="col-12">
-                <a class="btn btn-secondary" href="{{ path('groupe_new', {'competition': competition.id}) }}">Créer un nouveau groupe</a>
-                <a class="btn btn-secondary" href="{{ path('groupe_genDuels', {'competition': competition.id}) }}">Générer les duels</a>
+                <a class="btn btn-secondary" href="{{ path('competition_index') }}">Liste des compétitions</a>
+                <a class="btn btn-success" href="{{ path('groupe_new', {'competition': competition.id}) }}">Créer un nouveau groupe</a>
+                <a class="btn btn-info" href="{{ path('groupe_genDuels', {'competition': competition.id}) }}">Générer les duels</a>
             </div>
             {% for groupe in groupes %}
                 <div class="col-12">
                     <div class="card mt-2 mb-2">
                         <div class="card-header">
-                            Groupe {{ groupe.groupe.nom }}
+                            <a href="{{ path('groupe_edit', {'competition': competition.id, 'id': groupe.groupe.id}) }}">Groupe {{ groupe.groupe.nom }}</a>
                         </div>
                         <div class="card-body row d-flex">
                             <div class="col-12 col-sm-6 align-self-center">
@@ -55,7 +56,7 @@
                                                 <td class="text-center">{{ loop.index }}</td>
                                                 <td>
                                                     <span class="flag-icon flag-icon-{{equipe.equipe.paysinitial}}"></span>
-                                                     {{ equipe.equipe.nom }}
+                                                    <a href="{{ path('equipe_show', {'id': equipe.equipe.id}) }}">{{ equipe.equipe.nom }}</a>
                                                 </td>
                                                 <td class="text-center">{{ equipe.points }}</td>
                                                 <td class="text-center">{{ equipe.match_j }}</td>
@@ -92,7 +93,7 @@
                                                     <td>{%if duel.horaire %}{{ duel.horaire|date('Y-m-d H:i') }}{% endif %}</td>
                                                     <td>
                                                         <span class="flag-icon flag-icon-{{ duel.equipe1.paysinitial }}"></span> 
-                                                        {{ duel.equipe1.nom }} 
+                                                        <a href="{{ path('equipe_show', {'id': duel.equipe1.id}) }}">{{ duel.equipe1.nom }}</a>
                                                     </td>
                                                     <td>
                                                         {% if duel.scoreequipe1 > duel.scoreequipe2 %}
@@ -110,7 +111,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="flag-icon flag-icon-{{ duel.equipe2.paysinitial }}"></span> 
-                                                        {{ duel.equipe2.nom }}
+                                                        <a href="{{ path('equipe_show', {'id': duel.equipe2.id}) }}">{{ duel.equipe2.nom }}</a>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -130,6 +131,16 @@
 
 {% block javascripts %}
     <script>
+        
+        $.ajax({
+            url: '{{path('groupe_testDuel', {'competition': competition.id})}}',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+            }
+        });
+            
         $(".matchs").DataTable({
             "language": {
                 "sSearch": "Recherche&nbsp;:",
@@ -137,7 +148,7 @@
             "paging": false,
             "info": false,
             "columnDefs": [
-                { "orderable": false,  "targets": [ 2,3 ] }
+                { "orderable": false,  "targets": [ 0,1,2,3,4 ] }
             ]
         });
     </script>

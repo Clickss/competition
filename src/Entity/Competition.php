@@ -27,10 +27,16 @@ class Competition
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="competition", orphanRemoval=true)
      */
     private $groupes;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="competition")
+     */
+    private $typeduels;
 
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
+        $this->typeduels = new ArrayCollection();
     }
 
     public function getId()
@@ -46,6 +52,24 @@ class Competition
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+    
+    /**
+     * @return Collection|TypeDuel[]
+     */
+    public function getTypeDuels(): Collection
+    {
+        return $this->typeduels;
+    }
+
+    public function addTypeDuels(TypeDuel $typeduel): self
+    {
+        if (!$this->typeduels->contains($typeduel)) {
+            $this->typeduels[] = $typeduel;
+            $typeduel->setCompetition($this);
+        }
 
         return $this;
     }

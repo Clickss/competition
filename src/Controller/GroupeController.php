@@ -31,17 +31,17 @@ class GroupeController extends Controller
         foreach ($groupes as $groupe) {
             $tab = array();
             $tab['groupe'] = $groupe;
-            $tab['duels'] = $duelRepository->findDuelByGroupe($groupe);
+            $tab['duels'] = $duelRepository->findDuelByGroupe($groupe, $competition);
             $tab['equipes'] = array();
             foreach ($groupe->getEquipes() as $equipe) {
                 $tab_equ = array();
                 $tab_equ['equipe'] = $equipe;
-                $nbMatchGagne = $duelRepository->nbMatchGagne($equipe)[0]['nbMatchGagne'];
-                $nbMatchNul = $duelRepository->nbMatchNul($equipe)[0]['nbMatchNul'];
-                $nbMatchPerdu = $duelRepository->nbMatchPerdu($equipe)[0]['nbMatchPerdu'];
-                $nbMatchJoue = $duelRepository->nbMatchJoue($equipe)[0]['nbMatch'];
-                $nbButPour = $duelRepository->nbButPour($equipe)[0]['nbButPour'];
-                $nbButContre = $duelRepository->nbButContre($equipe)[0]['nbButContre'];
+                $nbMatchGagne = $duelRepository->nbMatchGagne($equipe, $competition)[0]['nbMatchGagne'];
+                $nbMatchNul = $duelRepository->nbMatchNul($equipe, $competition)[0]['nbMatchNul'];
+                $nbMatchPerdu = $duelRepository->nbMatchPerdu($equipe, $competition)[0]['nbMatchPerdu'];
+                $nbMatchJoue = $duelRepository->nbMatchJoue($equipe, $competition)[0]['nbMatch'];
+                $nbButPour = $duelRepository->nbButPour($equipe, $competition)[0]['nbButPour'];
+                $nbButContre = $duelRepository->nbButContre($equipe, $competition)[0]['nbButContre'];
                 $tab_equ['points'] = intval($nbMatchGagne) * 2 + $nbMatchNul;
                 $tab_equ['match_g'] = $nbMatchGagne;
                 $tab_equ['match_n'] = $nbMatchNul;
@@ -159,6 +159,7 @@ class GroupeController extends Controller
                 for($j=$i+1;$j<count($equipes);$j++)
                 {
                     $duel = new Duel();
+                    $duel->setCompetition($competition);
                     $duel->setEquipe1($equipes[$i]);
                     $duel->setEquipe2($equipes[$j]);
                     $type_duel = $typeDuelRepository->findOneBy(array("code_type_duel" => Duel::DUEL_POULE));
@@ -172,5 +173,16 @@ class GroupeController extends Controller
         }
         
         return $this->redirectToRoute('groupe_index', array("competition" => $competition->getId()));
+    }
+    
+    /**
+     * @Route("/ajax/test_duels", name="groupe_testDuel", methods="POST")
+     */
+    public function testDuels(): Response{
+        
+        $retour = array();
+        $retour["testDuels"]["result"] = true;
+        
+        return new Response(json_encode($retour));
     }
 }
